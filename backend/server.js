@@ -12,6 +12,8 @@ const app = express()
 
 //use cors orgin(to communiction each other frontend to backend)
 app.use(cors())
+//parsing json - return middlware that only parse json - javavscript
+app.use(express.json())
 
 
 app.use('/api/user',userRoutes)
