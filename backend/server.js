@@ -1,6 +1,6 @@
 //import express modules
 const express = require('express')
-const {chats} = require('./data/data')
+// const {chats} = require('./data/data')
 //import .env
 const env = require('dotenv').config()
 //import cors
