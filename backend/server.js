@@ -2,7 +2,7 @@
 const express = require('express')
 // const {chats} = require('./data/data')
 //import .env
-const env = require('dotenv').config()
+ require('dotenv').config()
 //import cors
 const cors = require('cors')
 //import router
@@ -17,6 +17,8 @@ app.use(express.json())
 
 
 app.use('/api/user',userRoutes)
+
+//use
 
 //set PORT
 const PORT = 5000 || process.env
