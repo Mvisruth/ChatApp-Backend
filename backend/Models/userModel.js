@@ -37,11 +37,15 @@ userSchema.methods.matchPassword =async function(enterPassword) {
     
 }
 
-//en
+//we want to encrypt password saving then store the database
+//logic to decode the password
+//pre means before
 userSchema.pre('save',async function (next) {
     if(!this.isModified){
         next()
+        
     }
+    //then condition true then generate new password
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password,salt)
 })

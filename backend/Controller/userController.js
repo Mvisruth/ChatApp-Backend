@@ -40,7 +40,7 @@ const registerUser = async(req,res)=>{
                     name:newUser.name,
                     email:newUser.email,
                     pic:newUser.pic,
-                    token
+                    token,
 
 
                 })
@@ -68,17 +68,18 @@ const loginUser = async(req,res)=>{
         {
             res.status(400).json("please enter vaild input")
         }
-    const login = await Users.findOne({email,password})
+    const login = await Users.findOne({email})
+    const token =jwt.sign({id:login._id},process.env.jwt_key)
 
-    if(login && (await newUser.matchPassword(password)))
+
+    if(login && (await login.matchPassword(password)))
         {
             res.status(200).json({
-                _id:newUser._id,
-                    name:newUser.name,
-                    email:newUser.email,
-                    pic:newUser.pic,
+                    _id:login._id,
+                    name:login.name,
+                    email:login.email,
+                    pic:login.pic,
                     token,
-
 
             })
         }
