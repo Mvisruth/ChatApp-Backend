@@ -2,13 +2,18 @@
 const Users = require('../Models/userModel')
 //import jwt
 const jwt = require('jsonwebtoken')
+
+
+
 //logic for register
 const registerUser = async(req,res)=>{
     //extract data from body
     const {name,email,password,pic}=req.body
     
-       try {if(!name||!email||!password){
-            res.status(406).json("please enter Valid feild")
+       try { 
+        
+        if(!email||!password){
+        res.status(406).json("please enter Valid feild")
         }
     
         const userExists = await Users.findOne({email})
@@ -59,16 +64,19 @@ const registerUser = async(req,res)=>{
     
 
 }
+
+
 //logic for login
 
 const loginUser = async(req,res)=>{
     //extract data from body
-    const {email,password}=req.body
-    if(!email||!password)
-        {
-            res.status(400).json("please enter vaild input")
-        }
+   try { const {email,password}=req.body
+    // if(!email||!password)
+    //     {
+    //         res.status(400).json("please enter vaild input")
+    //     }
     const login = await Users.findOne({email})
+    //findone give doc 
     const token =jwt.sign({id:login._id},process.env.jwt_key)
 
 
@@ -86,7 +94,13 @@ const loginUser = async(req,res)=>{
             else{
                 res.status(406);
                 throw new Error("invaild email or password")
+                
             }
+        }catch(err)
+        {
+            console.log("reqister request faild due to ",err)
+
+        }
         
 }
 

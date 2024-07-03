@@ -7,7 +7,8 @@ const router = new express.Router()
 
 //path to resolve set resolve request
 //     syntax = router.http('path',()=>{how to resolve})
-router.post('/',registerUser)
+router.post('/register',registerUser)
+// router.post('/',registerUser)
 router.post('/login',loginUser)
 
 
