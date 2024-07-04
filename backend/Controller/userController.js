@@ -65,7 +65,6 @@ const registerUser = async(req,res)=>{
 
 }
 
-
 //logic for login
 
 const loginUser = async(req,res)=>{
@@ -104,7 +103,27 @@ const loginUser = async(req,res)=>{
         
 }
 
+//api/user?search=abc
+//user searching function 
+//reg
+const allUsers =async(req,res)=>{
 
-module.exports = {registerUser,loginUser}
+    const keyword = req.query.search
+    ?{
+         $or: [
+            {name:{$regex:req.query.search,$options:"i"}},
+            {email:{$regex:req.query.search,$options:"i"}},
+         ],
 
+
+        }:{};
+      const user =  await Users.find(keyword).find({_id:{ $ne: req.user._id }})
+      res.send(user)
+
+    }
+    // console.log(keyword)
+
+
+
+module.exports = {registerUser,loginUser,allUsers}
 
