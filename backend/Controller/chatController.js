@@ -103,6 +103,7 @@ const createGroupChat =async(req,res)=>{
     }
 
     users.push(req.user)
+  
 
 
     try {
@@ -110,9 +111,9 @@ const createGroupChat =async(req,res)=>{
         const groupChat = await Chat.create({
 
             chatName:req.body.name,
-            users:users,
             isGroupChat:true,
             groupAdmin:req.user, 
+            users:users,
             
 
 
