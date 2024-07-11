@@ -8,8 +8,10 @@ const express = require('express')
 //import router
 const userRoutes = require('./Routing/router')
 //
+const chatRoutes =require('./Routing/chatRoutes')
 
 const {notFound,errorHandle} = require('./middlewares/errorMiddleware')
+
 const router = require('./Routing/router')
 
 //create server 
@@ -24,6 +26,8 @@ app.use(router)
 
 //use
 app.use('/api/user',userRoutes)
+//api endpoint to chat
+app.use('/api/chat',chatRoutes)
 
 //error handling function
 app.use(notFound)

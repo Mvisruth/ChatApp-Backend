@@ -75,7 +75,7 @@ const loginUser = async(req,res)=>{
     //         res.status(400).json("please enter vaild input")
     //     }
     const login = await Users.findOne({email})
-    //findone give doc 
+    //findone give doc back
     const token =jwt.sign({id:login._id},process.env.jwt_key)
 
 
@@ -100,7 +100,6 @@ const loginUser = async(req,res)=>{
             console.log("reqister request faild due to ",err)
 
         }
-        
 }
 
 //api/user?search=abc

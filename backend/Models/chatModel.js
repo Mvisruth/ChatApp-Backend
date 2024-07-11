@@ -7,19 +7,19 @@ const chatModel = mongoose.Schema({
      users:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"users"
+            ref:"Users"
         }
      ],
      letestMessage:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"message"
+        ref:"Message"
 
 
 
      },
      groupAdmin:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"uder"
+        ref:"Users"
 
      }
 },{
