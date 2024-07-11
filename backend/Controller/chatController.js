@@ -2,7 +2,7 @@ const Chat = require('../Models/chatModel')
 const Users = require('../Models/userModel')
 
 
-
+//access chat
 const accessChat = async(req,res)=>{
 
     const {userId} =req.body
@@ -54,7 +54,7 @@ const accessChat = async(req,res)=>{
 }
 
 
-
+//fetch chat
 const fetchChat = async(req,res)=>{
 
     try{
@@ -84,9 +84,9 @@ const fetchChat = async(req,res)=>{
 
 }
 
-
+//create groupchat
 const createGroupChat =async(req,res)=>{
-    if(!req.body.users || !req.body.users){
+    if(!req.body.users || !req.body.name){
         return res.status(400).send({message:"please fill all the feild"})
         
 
@@ -112,7 +112,7 @@ const createGroupChat =async(req,res)=>{
             chatName:req.body.name,
             users:users,
             isGroupChat:true,
-            groupAdmin:req.user,
+            groupAdmin:req.user, 
             
 
 
