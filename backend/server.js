@@ -2,7 +2,7 @@
 const express = require('express')
 // const {chats} = require('./data/data')
 //import .env
- require('dotenv').config()
+require('dotenv').config();
 //import cors
 // const cors = require('cors')
 //import router
