@@ -84,6 +84,7 @@ const fetchChat = async(req,res)=>{
 
 }
 
+
 //create groupchat
 const createGroupChat =async(req,res)=>{
     if(!req.body.users || !req.body.name){
@@ -124,6 +125,7 @@ const createGroupChat =async(req,res)=>{
         .populate("groupAdmin","password")
    
         res.status(200).send(fullGroupChat)
+        console.log(groupChat)
         
     } catch (error) {
         res.status(400)
