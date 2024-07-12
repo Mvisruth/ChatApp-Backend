@@ -206,9 +206,10 @@ const removeFromGroup =async(req,res)=>{
          new:true
      }
  )
+
  .populate("users","-password")
  .populate("groupAdmin","-password")
- 
+
  
  if(!remove){
  
