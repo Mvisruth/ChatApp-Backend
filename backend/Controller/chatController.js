@@ -15,14 +15,14 @@ const accessChat = async(req,res)=>{
     var isChat = await Chat.find({
         isGroupChat:false,
         $and:[
-            {users:{$elemMatch:{$eq:req.user._id}}},
+            {users:{$elemMatch:{$eq:req.user}}},
             {users:{$elemMatch:{$eq:userId}}}
 
 
         ],
     })
     .populate("users","-password")
-    .populate("letestMessage")
+     .populate("letestMessage")
 
     isChat = await Users.populate(isChat,{
         path:"letestMessage.sender",
@@ -63,7 +63,7 @@ const fetchChat = async(req,res)=>{
     .populate("users","-password")
     .populate("groupAdmin","password")
     .populate("letestMessage")
-    .sort({updateAt:-1})
+   .sort({updateAt:-1})  
     .then(async(results)=>{
         results=await Users.populate(results,{
           
@@ -113,8 +113,9 @@ const createGroupChat =async(req,res)=>{
 
             chatName:req.body.name,
             isGroupChat:true,
-            groupAdmin:req.user, 
             users:users,
+            groupAdmin:req.user, 
+            
             
 
 
@@ -125,7 +126,7 @@ const createGroupChat =async(req,res)=>{
         .populate("groupAdmin","password")
    
         res.status(200).send(fullGroupChat)
-        console.log(groupChat)
+        // console.log(req.user)
         
     } catch (error) {
         res.status(400)
@@ -133,6 +134,12 @@ const createGroupChat =async(req,res)=>{
         
     }
 
+}
+
+//renameGroup
+
+const renameGroup =async(req,res)=>{
+    const {chatId,chatName}=req.body
 }
 
 

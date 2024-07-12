@@ -3,7 +3,7 @@
 //create structure how to store data means schema
 const messageModel = mongoose.Schema(
     {
-        sender:{type:mongoose.Schema.Types.ObjectId,ref:"Users"},
+        // sender:{type:mongoose.Schema.Types.ObjectId,ref:"Users"},
         content:{type:String,trim:true},
         chat:{type:mongoose.Schema.Types.ObjectId,ref:"Chat"},
 
