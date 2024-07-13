@@ -165,7 +165,7 @@ const renameGroup =async(req,res)=>{
     else{
         res.json(updatedChat)
     }
- 
+  
 }
 
 //addtoGroup
@@ -220,8 +220,6 @@ const removeFromGroup =async(req,res)=>{
      res.json(remove)
  }
  }
-
-
 
 
 
