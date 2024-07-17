@@ -11,11 +11,10 @@ router.put('/rename',protect,renameGroup)
 router.put('/groupadd',protect,addtoGroup)
 router.put('/groupremove',protect,removeFromGroup)
 
+ 
 
-
-
-
-
+  
+ 
 
 
 

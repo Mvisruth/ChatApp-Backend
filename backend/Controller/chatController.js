@@ -92,9 +92,7 @@ const createGroupChat =async(req,res)=>{
         return res.status(400).send({message:"please fill all the feild"})
         
 
-    }
-    
-    
+    }   
     var users = JSON.parse(req.body.users)
     
 
@@ -220,7 +218,7 @@ const removeFromGroup =async(req,res)=>{
      res.json(remove)
  }
  }
-
+ 
 
 
 module.exports={accessChat,fetchChat,createGroupChat,renameGroup,addtoGroup,removeFromGroup}

@@ -113,7 +113,7 @@ const allUsers =async(req,res)=>{
             {name:{$regex:req.query.search,$options:"i"}},
             {email:{$regex:req.query.search,$options:"i"}},
          ],
-
+ 
 
         }:{};
       const user =  await Users.find(keyword).find({_id:{ $ne: req.user._id }})
