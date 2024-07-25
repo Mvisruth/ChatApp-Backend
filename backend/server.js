@@ -15,7 +15,6 @@ const messageRoutes =require('./Routing/messageRoutes')
 const {notFound,errorHandle} = require('./middlewares/errorMiddleware')
 
 const router = require('./Routing/router');
-const { Socket } = require('socket.io');
 const path = require("path")
 
 //create server 
@@ -50,7 +49,7 @@ if (process.env.NODE_ENV === 'production') {
         res.status(500).send(err);
       }
     });
-  });
+  }); 
 } else {
   console.log("Serving API success message...");
   app.get('/', (req, res) => {
@@ -76,7 +75,7 @@ const server = app.listen(PORT,console.log(`server started on Port ${PORT}`))
 const io = require('socket.io')(server,{ 
     pingTimeout:60000,
     cors:{ 
-        origin:'http://localhost:3000'
+        origin:'http://localhost:3000',
     }
 })
 
