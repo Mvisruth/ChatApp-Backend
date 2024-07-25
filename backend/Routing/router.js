@@ -17,4 +17,4 @@ router.post('/login',loginUser)
 router.get("/", protect,allUsers)
 
 
-module.exports = router
+module.exports = router 

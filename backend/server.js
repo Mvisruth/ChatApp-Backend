@@ -16,6 +16,7 @@ const {notFound,errorHandle} = require('./middlewares/errorMiddleware')
 
 const router = require('./Routing/router');
 const { Socket } = require('socket.io');
+const path = require("path")
 
 //create server 
 const app = express()
@@ -34,6 +35,31 @@ app.use('/api/chat',chatRoutes)
 //api endpoint to chat
 app.use('/api/message',messageRoutes)
 
+//deployment
+const __dirname1 = path.resolve();
+console.log(`Server starting with NODE_ENV: ${process.env.NODE_ENV}`);
+
+if (process.env.NODE_ENV === 'production') {
+  console.log("Serving static files from React app...");
+  app.use(express.static(path.join(__dirname1, 'frontend', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname1, 'frontend', 'build', 'index.html'), (err) => {
+      if (err) {
+        console.error("Error sending index.html:", err);
+        res.status(500).send(err);
+      }
+    });
+  });
+} else {
+  console.log("Serving API success message...");
+  app.get('/', (req, res) => {
+    res.send("API is running successfully");
+  });
+}
+
+//
+
 //error handling function
 app.use(notFound) 
 app.use(errorHandle)
@@ -41,15 +67,15 @@ app.use(errorHandle)
  
 //set PORT
 const PORT = 5000 || process.env
-//import connection.js
+//import connection.js 
 require('./DB/connection')
 
 //run server
 const server = app.listen(PORT,console.log(`server started on Port ${PORT}`))
 //socket
-const io = require('socket.io')(server,{
+const io = require('socket.io')(server,{ 
     pingTimeout:60000,
-    cors:{
+    cors:{ 
         origin:'http://localhost:3000'
     }
 })
@@ -67,6 +93,12 @@ io.on("connection",(Socket)=>{
     Socket.join(room)
     console.log('user Joined '+room)
    })
+
+   Socket.on("typing",(room)=>Socket.in(room).emit('typing'))
+   Socket.on("stop typing",(room)=>Socket.in(room).emit('stop typing'))
+
+
+
 
    Socket.on('new message',(newMessageRecieved)=>{
     var chat = newMessageRecieved.chat
