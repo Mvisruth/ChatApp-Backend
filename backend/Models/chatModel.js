@@ -12,8 +12,7 @@ const chatModel = mongoose.Schema({
      ],
      letestMessage:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Message"
-
+        ref:"Message" 
 
 
      },

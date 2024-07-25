@@ -16,7 +16,7 @@ const accessChat = async(req,res)=>{
     var isChat = await Chat.find({
         isGroupChat:false,
         $and:[
-            {users:{$elemMatch:{$eq:req.user}}},
+            {users:{$elemMatch:{$eq:req.user._id}}},
             {users:{$elemMatch:{$eq:userId}}}
 
 
@@ -56,34 +56,27 @@ const accessChat = async(req,res)=>{
 
 
 //fetch chat
-const fetchChat = async(req,res)=>{
+const fetchChat = async(req, res) => {
+    try {
+        const results = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password")
+        .populate("letestMessage")
+        .sort({ updatedAt: -1 })
+        // .limit(5);
 
-    try{
-        
-        Chat.find({users:{$elemMatch:{$eq:req.user}}})
-    .populate("users","-password")
-    .populate("groupAdmin","password")
-    .populate("letestMessage")
-   .sort({updateAt:-1})  
-    .then(async(results)=>{
-        results=await Users.populate(results,{
-          
-        path:"letestMessage.sender",  
-        select:"name pic emai"
-    })
-    res.status(200).send(results)
+        const populatedResults = await Users.populate(results, {
+            path: 'letestMessage.sender',
+            select: 'name pic email',
+        });
 
-    })
-
-
-
-    }catch(err){
-        res.status(400)
-        throw new Error(err.message)
-
+        // console.log('Fetched Chats:', populatedResults); // Debug
+        res.status(200).send(populatedResults);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
+};
 
-}
 
 
 //create groupchat
@@ -124,18 +117,18 @@ const createGroupChat =async(req,res)=>{
         .populate("users","-password")
         .populate("groupAdmin","password")
    
-        res.status(200).send(fullGroupChat)
+        res.status(200).send(fullGroupChat) 
         // console.log(req.user)
         
     } catch (error) {
         res.status(400)
-        throw new Error(err.message)
+        throw new Error(error.message)
         
-    }
+    } 
 
-}
+} 
 
-
+ 
 
 //renameGroup
 const renameGroup =async(req,res)=>{
@@ -144,9 +137,9 @@ const renameGroup =async(req,res)=>{
             chatId,
             {
             chatName
-            
+             
            },{
-            new:true,
+            new:true, 
            }
            
     )
@@ -218,7 +211,7 @@ const removeFromGroup =async(req,res)=>{
      res.json(remove)
  }
  }
- 
+  
 
 
 module.exports={accessChat,fetchChat,createGroupChat,renameGroup,addtoGroup,removeFromGroup}

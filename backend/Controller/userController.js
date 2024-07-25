@@ -69,7 +69,8 @@ const registerUser = async(req,res)=>{
 
 const loginUser = async(req,res)=>{
     //extract data from body
-   try { const {email,password}=req.body
+   try {
+     const {email,password}=req.body
     // if(!email||!password)
     //     {
     //         res.status(400).json("please enter vaild input")
@@ -82,10 +83,10 @@ const loginUser = async(req,res)=>{
     if(login && (await login.matchPassword(password)))
         {
             res.status(200).json({
-                    _id:login._id,
+                    _id:login._id, 
                     name:login.name,
                     email:login.email,
-                    pic:login.pic,
+                    pic:login.pic, 
                     token,
 
             })

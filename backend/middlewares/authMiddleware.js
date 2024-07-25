@@ -19,7 +19,7 @@ const protect = async(req,res,next)=>{
   next()
        }catch(err){
     res.status(401)
-    throw new Error("Not autherization token faild")
+    throw new Error("Not autherization token faild",err)
   }
 }
 if(!token)
@@ -28,4 +28,4 @@ if(!token)
         throw new Error("not autherized,not token") 
     }
 }
-module.exports = {protect}  
+module.exports = {protect}   
