@@ -4,7 +4,7 @@ const express = require('express')
 //import .env
 require('dotenv').config();
 //import cors
-// const cors = require('cors')
+const cors = require('cors')
 //import router
 const userRoutes = require('./Routing/router')
 //
@@ -21,7 +21,7 @@ const path = require("path")
 const app = express()
 
 //use cors orgin(to communiction each other frontend to backend)
-// app.use(cors())
+app.use(cors())
 //parsing json - return middlware that only parse json - javavscript
 app.use(express.json())
 //server using router
@@ -40,22 +40,16 @@ console.log(`Server starting with NODE_ENV: ${process.env.NODE_ENV}`);
 
 if (process.env.NODE_ENV === 'production') {
   console.log("Serving static files from React app...");
-  app.use(express.static(path.join(__dirname1, 'frontend', 'build')));
-
+  app.use(express.static(path.join(__dirname1, 'frontend/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname1, 'frontend', 'build', 'index.html'), (err) => {
-      if (err) {
-        console.error("Error sending index.html:", err);
-        res.status(500).send(err);
-      }
-    });
-  }); 
-} else {
+    res.sendFile(path.resolve(__dirname1, 'frontend', 'build', 'index.html'));
+  });
+} else { 
   console.log("Serving API success message...");
   app.get('/', (req, res) => {
     res.send("API is running successfully");
   });
-}
+} 
 
 //
 
@@ -88,7 +82,7 @@ io.on("connection",(Socket)=>{
       Socket.emit('connected')
     })
 
-   Socket.on('join chat',(room)=>{
+    Socket.on('join chat',(room)=>{
     Socket.join(room)
     console.log('user Joined '+room)
    })
